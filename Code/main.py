@@ -45,7 +45,7 @@ class Hand:
     def add_card(self, card):
         # from Deck.deal() --> single Card(suit, rank)
         self.cards.append(card)
-        self.value = values[card.rank]
+        self.value += values[card.rank]
 
         # track aces
         if card.rank == 'Ace':
@@ -79,7 +79,7 @@ def take_bet(chips):
         except ValueError:
             print('Sorry please provide an integer')
         else:
-            if chips.bet > chips.total:
+            if chips.bet > chips.total or chips.bet == 0:
                 print(f'Sorry, you do not have enough chips! \n You have {chips.total}')
             else:
                 break
@@ -144,6 +144,8 @@ def push(player, dealer):
     print('Dealer and Player tie! PUSH')
 
 
+# Set up player chips
+player_chips = Chip()
 # Game Manager
 while True:
 
@@ -160,9 +162,6 @@ while True:
     dealer_hand = Hand()
     dealer_hand.add_card(deck.deal())
     dealer_hand.add_card(deck.deal())
-
-    # Set up player chips
-    player_chips = Chip()
 
     # Prompt player for their bet
     take_bet(player_chips)
